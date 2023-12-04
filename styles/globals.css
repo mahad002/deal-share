@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+input, textarea{
+  @apply border flex flex-col border-gray-300 w-full rounded-sm px-1;
+  @apply mb-2;
+}
+
+input:focus, textarea:focus{
+  @apply border border-blue-900;
+}
+
+h1{
+  @apply text-blue-900 mb-2 text-xl;
+}
+
+label{
+  @apply text-blue-900;
+}
+
+.btn-primary{
+  @apply bg-blue-900 rounded-md px-4 py-1 text-white;
+}
+
+table.table-basic {
+  @apply w-full mt-4;
+}
+
+table.table-basic thead tr td {
+  @apply bg-blue-100;
+}
+
+table.table-basic tr td {
+  @apply border border-blue-300  p-1;
+}
+
+table.table-basic a{
+  @apply text-white bg-blue-900 text-sm py-1 px-2 rounded-md inline-flex gap-1 mr-1;
+}
+
+
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
