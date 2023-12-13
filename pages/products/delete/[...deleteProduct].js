@@ -23,12 +23,22 @@ export default function DeleteProductPage() {
         router.push('/products');
     }
 
+    function deleteProduct1() {
+        axios.delete(`/api/products?id=${deleteProduct}`).then(response => {
+            console.log('Response Data: ',response.data);
+            setProductInfo(response.data);
+            console.log("Product: ",productInfo);});
+            goBack();
+    }
+
     return (
 
         <Layout>
-            <h1>Do you really want to delete &nsbp; {productInfo?.title} ?</h1>
-            <button className="btn btn-alert bg-red-900 rounded-md p-1 px-3 text-white">Yes</button>
-            <button onClick={goBack} className="btn btn-primary m-2">No</button>
+            <h1 className="text-center">Do you really want to delete &nbsp;"{productInfo?.title}" ?</h1>
+            <div className="flex gap-2 justify-center">
+                <button onClick={deleteProduct1} className="btn btn-alert bg-red-900 rounded-md m-1 px-3 text-white">Yes</button>
+                <button onClick={goBack} className="btn btn-primary m-1">No</button>
+            </div>
         </Layout>
     );
 }
