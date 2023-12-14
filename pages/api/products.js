@@ -3,47 +3,60 @@ import { mongooseConnect } from "../lib/mongoose";
 
 export default async function handle(req, res) {
     const { method } = req;
-    await mongooseConnect();
-    // mongoose.connect(clientPromise.url);
-    if(method === 'POST') {
-        const {title,
-            description,
-            price,
-            category,
-            specs} = req.body;
-        const productDoc = await Product.create({
-            title,
-            description,
-            price,
-            category,
-            specs
-        })
-        res.json(productDoc);
-    }
-    if(method === 'GET'){
-        // console.log("ID: ",req.query.id);
-        if(req.query?.id){
-            const products = await Product.findOne({_id: req.query.id});
-            res.json(products);
-        }
-        const products = await Product.find({});
-        res.json(products);
-    }
-    if(method === 'PUT') {
-        const {title,
-            description,
-            price,
-            category,
-            specs, _id} = req.body;
-            await Product.updateOne({_id}, {title, description, price, category, specs});
-            res.json(true);
-    }
-    if(method === 'DELETE'){
-        if(req.query?.id) {
-            await Product.deleteOne({_id: req.query?.id});
-            res.json(true);
+    
+    try {
+        await mongooseConnect();
+
+        if (method === 'POST') {
+            const { title, description, price, category, specs, images } = req.body;
+            const productDoc = await Product.create({
+                title,
+                description,
+                price,
+                category,
+                specs,
+                images
+            });
+            res.json(productDoc);
         }
 
+        if (method === 'GET') {
+            if (req.query?.id) {
+                const product = await Product.findOne({ _id: req.query.id });
+                if (!product) {
+                    return res.status(404).json({ error: 'Product not found' });
+                }
+                res.json(product);
+            } else {
+                const products = await Product.find({});
+                res.json(products);
+            }
+        }
+
+        if (method === 'PUT') {
+            const { title, description, price, category, specs, _id, images } = req.body;
+            const updatedProduct = await Product.findByIdAndUpdate(
+                _id,
+                { title, description, price, category, specs, images },
+                // { new: true }
+            );
+            if (!updatedProduct) {
+                return res.status(404).json({ error: 'Product not found' });
+            }
+            res.json(updatedProduct);
+        }
+
+        if (method === 'DELETE') {
+            if (req.query?.id) {
+                const deletedProduct = await Product.findByIdAndDelete(req.query?.id);
+                if (!deletedProduct) {
+                    return res.status(404).json({ error: 'Product not found' });
+                }
+                res.json(true);
+            }
+        }
+    } catch (error) {
+        console.error('Error in products.js:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-   
 }
