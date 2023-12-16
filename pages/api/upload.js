@@ -1,5 +1,5 @@
 
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import multiparty from "multiparty";
 import fs from 'fs';
 import mime from 'mime-types';
@@ -42,7 +42,31 @@ export default async function handle(req, res){
         }
 
         return res.json({links});
-    } else {
+    } else if (req.method === 'DELETE') {
+        const { filename } = req.query;
+        // const filename = 'https://s3.console.aws.amazon.com/s3/object/deal-share?region=ap-south-1&bucketType=general&prefix=1702561672239.png';
+
+        const client = new S3Client({
+            region: 'ap-south-1',
+            credentials: {
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            },
+        });
+            try {
+                const data = await client.send(new DeleteObjectCommand({
+                    Bucket: "deal-share",
+                    Key: filename,
+                }));
+                console.log("Success. Object deleted.", data);
+                console.log("File deleted successfully");
+                return data;
+            } catch (error) {
+                console.error('Error deleting file:', error);
+                return res.status(500).json({ error: 'Failed to delete file' });
+            }
+    }
+    else {
         res.status(405).json({ error: 'Method Not Allowed' });
     }
 }

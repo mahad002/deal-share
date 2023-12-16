@@ -1,19 +1,56 @@
 import Layout from "@/components/Layout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
 
-// Define a mapping of category to specifications
-const categorySpecsMapping = {
-  "Mobile Phone": ["brand", "model", "screenSize", "ram", "rom"],
-  "Tablet": ["brand", "model", "screenSize", "ram", "rom"],
-  "Laptop": ["brand", "model", "screenSize", "processor", "cpu", "gpu", "ram", "storageCapacity"],
-  "Computer (PC)": ["brand", "model", "screenSize", "processor", "cpu", "gpu", "ram", "storageCapacity"],
-};
+// const categorySpecsMapping = {
+//   "Mobile Phone": ["brand", "model", "screenSize", "ram", "rom"],
+//   "Tablet": ["brand", "model", "screenSize", "ram", "rom"],
+//   "Laptop": ["brand", "model", "screenSize", "processor", "cpu", "gpu", "ram", "storageCapacity"],
+//   "Computer (PC)": ["brand", "model", "screenSize", "processor", "cpu", "gpu", "ram", "storageCapacity"],
+// };
 
-export default function ProductForm({
+const categorySpecsMapping1 = {
+    "Mobile Phone": [
+      { name: "brand", type: "string" },
+      { name: "model", type: "string" },
+      { name: "screenSize", type: "number" },
+      { name: "ram", type: "number" },
+      { name: "rom", type: "number" },
+    ],
+    "Tablet": [
+      { name: "brand", type: "string" },
+      { name: "model", type: "string" },
+      { name: "screenSize", type: "number" },
+      { name: "ram", type: "number" },
+      { name: "rom", type: "number" },
+    ],
+    "Laptop": [
+      { name: "brand", type: "string" },
+      { name: "model", type: "string" },
+      { name: "screenSize", type: "number" },
+      { name: "processor", type: "string" },
+      { name: "cpu", type: "string" },
+      { name: "gpu", type: "string" },
+      { name: "ram", type: "number" },
+      { name: "storageCapacity", type: "number" },
+    ],
+    "Computer (PC)": [
+      { name: "brand", type: "string" },
+      { name: "model", type: "string" },
+      { name: "screenSize", type: "number" },
+      { name: "processor", type: "string" },
+      { name: "cpu", type: "string" },
+      { name: "gpu", type: "string" },
+      { name: "ram", type: "number" },
+      { name: "storageCapacity", type: "number" },
+    ],
+  };
+  
+
+const ProductForm = ({
   _id,
   title: existingTitle,
   images: existingImages,
@@ -21,7 +58,7 @@ export default function ProductForm({
   price: existingPrice,
   category: existingCategory,
   specs: existingSpecs,
-}) {
+}) => {
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
   const [price, setPrice] = useState(existingPrice || "");
@@ -30,10 +67,48 @@ export default function ProductForm({
   const [images, setImages] = useState(existingImages || []);
   const [spinner, setSpinner] = useState(false);
   const [goToProducts, setGoToProducts] = useState(false);
-
+  const [categorySpecsMapping, setCategorySpecsMapping] = useState([]);
   const router = useRouter();
 
-  async function saveProduct(ev) {
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`/api/categories`);
+        console.log("Category Response: ", response.data);
+  
+        // Transform the response data to match the old structure
+        const transformedData = response.data.map((category) => {
+          const specifications = category.specifications.map((spec) => {
+            return {
+              name: spec.name,
+              type: spec.type,
+            };
+          });
+  
+          return {
+            [category.name]: specifications,
+          };
+        });
+  
+        // Update the state with the transformed data
+        setCategorySpecsMapping(Object.assign({}, ...transformedData));
+  
+      } catch (error) {
+        console.error(`Error fetching Categories`);
+      }
+    };
+  
+    fetchCategories();
+  
+    // Cleanup function if needed
+    return () => {
+      // Any cleanup code goes here
+    };
+  }, []); // Empty dependency array for initial render only
+  
+
+  const saveProduct = async (ev) => {
     ev.preventDefault();
     const product = {
       title,
@@ -44,16 +119,20 @@ export default function ProductForm({
       images,
     };
 
-    if (_id) {
-      await axios.put('/api/products', { ...product, _id });
-    } else {
-      console.log("Products: ", product);
-      await axios.post('/api/products', product);
+    try {
+      if (_id) {
+        await axios.put('/api/products', { ...product, _id });
+      } else {
+        await axios.post('/api/products', product);
+      }
+      setGoToProducts(true);
+    } catch (error) {
+      console.error("Error saving product:", error);
+      // Handle error, e.g., show a user-friendly message
     }
-    setGoToProducts(true);
-  }
+  };
 
-  function handleCategoryChange(ev) {
+  const handleCategoryChange = (ev) => {
     const selectedCategory = ev.target.value;
     setCategory(selectedCategory);
 
@@ -63,17 +142,17 @@ export default function ProductForm({
       return acc;
     }, {});
     setSpecs(initialSpecs || {});
-  }
+  };
 
-  function handleSpecsChange(ev) {
+  const handleSpecsChange = (ev) => {
     const { name, value } = ev.target;
     setSpecs((prevSpecs) => ({
       ...prevSpecs,
       [name]: value,
     }));
-  }
+  };
 
-  async function uploadImage(ev) {
+  const uploadImage = async (ev) => {
     const files = ev.target?.files;
     if (files?.length > 0) {
       setSpinner(true);
@@ -82,18 +161,32 @@ export default function ProductForm({
       for (const file of files) {
         data.append("file", file);
       }
-      const res = await axios.post('/api/upload', data);
 
-      console.log(res.data);
-      setImages((prevImages) => [...prevImages, ...res.data.links]);
-      setSpinner(false);
+      try {
+        const res = await axios.post('/api/upload', data);
+        setImages((prevImages) => [...prevImages, ...res.data.links]);
+      } catch (error) {
+        console.error("Error uploading images:", error);
+        // Handle error, e.g., show a user-friendly message
+      } finally {
+        setSpinner(false);
+      }
     }
-  }
+  };
 
-  function orderImages(images) {
-    console.log(images);
-    setImages(images);
-  }
+  const orderImages = (newImages) => {
+    setImages(newImages);
+  };
+
+
+    const removeImage = (index) => {
+        setImages((prevImages) => {
+            const newImages = [...prevImages];
+            newImages.splice(index, 1);
+            return newImages;
+        });
+    };
+
 
   if (goToProducts) {
     router.push('/products');
@@ -113,9 +206,17 @@ export default function ProductForm({
                         <label>Photos</label>
                         <div className="mb-2 flex flex-wrap gap-2">
                             <ReactSortable className = "flex flex-wrap gap-1" list={images} setList={orderImages}>
-                            {!!images?.length && images.map(link => (
-                                <div className = 'inline-block h-24' key={link}>
-                                    <img src={link} className="rounded-lg" alt=""/>
+                            {!!images?.length && images.map((link, index) => (
+                                <div className="" key={link}>
+                                   <div className="relative group h-24">
+                                        <button
+                                            className="absolute top-1 right-1 text-white rounded-full w-5 h-5 opacity-0 group-hover:opacity-100"
+                                            onClick={() => removeImage(index)}
+                                        >
+                                            x
+                                        </button>
+                                        <img src={link} className="rounded-lg" alt="" />
+                                    </div>
                                 </div>
                             ))}
                             </ReactSortable>
@@ -165,31 +266,33 @@ export default function ProductForm({
       <label className="pr-6 mt-4">Category</label>
       <select className="mb-4 mr-4 mt-4" value={category} onChange={handleCategoryChange} required>
         <option value="">Select a category</option>
-        <option value="Laptop">Laptop</option>
-        <option value="Mobile Phone">Mobile Phone</option>
-        <option value="Computer (PC)">Computer (PC)</option>
-        <option value="Tablet">Tablet</option>
+        {Object.keys(categorySpecsMapping).map((categoryOption) => (
+          <option key={categoryOption} value={categoryOption}>
+            {categoryOption}
+          </option>
+        ))}
       </select>
-
-      {/* Render dynamic inputs based on the selected category */}
       {categorySpecsMapping[category]?.map((spec) => (
-        <div key={spec}>
-          <label>{spec.charAt(0).toUpperCase() + spec.slice(1)}</label>
-          <input
+        <div key={spec.name}>
+            <label>{spec.name.charAt(0).toUpperCase() + spec.name.slice(1)}</label>
+            <input
             className=""
-            type="text"
-            name={spec}
-            value={specs[spec] || ""}
-            placeholder={spec}
+            type={spec.type}
+            name={spec.name}
+            value={specs[spec.name] || ""}
+            placeholder={spec.name}
             onChange={handleSpecsChange}
             required
-          />
+            />
         </div>
-      ))}
+        ))}
+
 
       <button type="submit" className="btn-primary mt-4">
         Save
       </button>
     </form>
   );
-}
+};
+
+export default ProductForm;

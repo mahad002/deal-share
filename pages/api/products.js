@@ -21,24 +21,37 @@ export default async function handle(req, res) {
         }
 
         if (method === 'GET') {
-            if (req.query?.id) {
-                const product = await Product.findOne({ _id: req.query.id });
-                if (!product) {
-                    return res.status(404).json({ error: 'Product not found' });
-                }
-                res.json(product);
-            } else {
-                const products = await Product.find({});
-                res.json(products);
-            }
-        }
+          if (req.query?.id) {
+              const product = await Product.findOne({ _id: req.query.id });
+              if (!product) {
+                  return res.status(404).json({ error: 'Product not found' });
+              }
+              res.json(product);
+          } else {
+              // Check if a category is provided in the query parameters
+              const { category } = req.query;
+              let products;
+      
+              if (category) {
+                  console.log(category);
+                  // If a category is provided, filter products by category
+                  products = await Product.find({ category });
+                  console.log("PRODUCTS: ",products)
+              } else {
+                  // If no category is provided, return all products
+                  products = await Product.find({});
+              }
+      
+              res.json(products);
+          }
+      }
 
         if (method === 'PUT') {
             const { title, description, price, category, specs, _id, images } = req.body;
             const updatedProduct = await Product.findByIdAndUpdate(
                 _id,
                 { title, description, price, category, specs, images },
-                // { new: true }
+                { new: true }
             );
             if (!updatedProduct) {
                 return res.status(404).json({ error: 'Product not found' });

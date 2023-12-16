@@ -16,6 +16,7 @@ export default function Products() {
 
     return (
         <Layout>
+            <h1 className="heading font-bold" style={{ fontSize: '32px' }}>Products</h1> <br/>
             <Link className="rounded-lg bg-blue-900 text-white py-1 px-2" href={'/products/newproduct'}>Add new product</Link>
             <table className="table-basic">
                 <thead>
