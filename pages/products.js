@@ -27,8 +27,19 @@ export default function Products() {
                 </thead>
                 <tbody>
                     {products && products.map((product, index) => (
+                        
                         <tr key={index}>
-                            <td>{product.title}</td>
+                            <td className="flex flex-wrap gap-2">
+                            {product.images && product.images.length > 0 ? (
+                                        <img
+                                            src={product.images[0]} // Display the URL of the first image
+                                            alt={product.title}
+                                            className="w-8 h-8" // Adjust the size as needed
+                                        />
+                                    ) : (
+                                        <span className='w-8 h-8 bg-gray-200 grid place-items-center'>?</span>
+                                    )}
+                            {product.title}</td>
                             <td>
                                 <Link href={`/products/edit/${product._id}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">

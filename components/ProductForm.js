@@ -12,42 +12,42 @@ import { ReactSortable } from "react-sortablejs";
 //   "Computer (PC)": ["brand", "model", "screenSize", "processor", "cpu", "gpu", "ram", "storageCapacity"],
 // };
 
-const categorySpecsMapping1 = {
-    "Mobile Phone": [
-      { name: "brand", type: "string" },
-      { name: "model", type: "string" },
-      { name: "screenSize", type: "number" },
-      { name: "ram", type: "number" },
-      { name: "rom", type: "number" },
-    ],
-    "Tablet": [
-      { name: "brand", type: "string" },
-      { name: "model", type: "string" },
-      { name: "screenSize", type: "number" },
-      { name: "ram", type: "number" },
-      { name: "rom", type: "number" },
-    ],
-    "Laptop": [
-      { name: "brand", type: "string" },
-      { name: "model", type: "string" },
-      { name: "screenSize", type: "number" },
-      { name: "processor", type: "string" },
-      { name: "cpu", type: "string" },
-      { name: "gpu", type: "string" },
-      { name: "ram", type: "number" },
-      { name: "storageCapacity", type: "number" },
-    ],
-    "Computer (PC)": [
-      { name: "brand", type: "string" },
-      { name: "model", type: "string" },
-      { name: "screenSize", type: "number" },
-      { name: "processor", type: "string" },
-      { name: "cpu", type: "string" },
-      { name: "gpu", type: "string" },
-      { name: "ram", type: "number" },
-      { name: "storageCapacity", type: "number" },
-    ],
-  };
+// const categorySpecsMapping1 = {
+//     "Mobile Phone": [
+//       { name: "brand", type: "string" },
+//       { name: "model", type: "string" },
+//       { name: "screenSize", type: "number" },
+//       { name: "ram", type: "number" },
+//       { name: "rom", type: "number" },
+//     ],
+//     "Tablet": [
+//       { name: "brand", type: "string" },
+//       { name: "model", type: "string" },
+//       { name: "screenSize", type: "number" },
+//       { name: "ram", type: "number" },
+//       { name: "rom", type: "number" },
+//     ],
+//     "Laptop": [
+//       { name: "brand", type: "string" },
+//       { name: "model", type: "string" },
+//       { name: "screenSize", type: "number" },
+//       { name: "processor", type: "string" },
+//       { name: "cpu", type: "string" },
+//       { name: "gpu", type: "string" },
+//       { name: "ram", type: "number" },
+//       { name: "storageCapacity", type: "number" },
+//     ],
+//     "Computer (PC)": [
+//       { name: "brand", type: "string" },
+//       { name: "model", type: "string" },
+//       { name: "screenSize", type: "number" },
+//       { name: "processor", type: "string" },
+//       { name: "cpu", type: "string" },
+//       { name: "gpu", type: "string" },
+//       { name: "ram", type: "number" },
+//       { name: "storageCapacity", type: "number" },
+//     ],
+//   };
   
 
 const ProductForm = ({

@@ -16,18 +16,24 @@ export default async function handle(req, res) {
       res.json(categories);
     } else if (method === 'POST') {
         const { name, specifications } = req.body;
-        const categoryDoc = await Category.create({
-            name, specifications
-        });
-        res.json(categoryDoc);
-      // res.status(200).json({ message: 'POST request handled' });
-    } else if (method === 'PUT') {
-        const { name, specs } = req.body;
+        console.log('Specification:', specifications);
+          const categoryDoc = await Category.create({
+            name,
+            specifications,
+          });
+          console.log('Created category:', categoryDoc);
+          res.json(categoryDoc);   
+         // res.status(200).json({ message: 'POST request handled' });
+      }
+     else if (method === 'PUT') {
+        const { name, specifications, _id} = req.body;
+        console.log(req.body);
+        console.log("SPECS: ",specifications);
         try {
           // Find the category by name and update it
           const updatedCategory = await Category.findOneAndUpdate(
-            { name: name },
-            { specifications: specs },
+            _id,
+            { name, specifications},
             { new: true }
           );
 

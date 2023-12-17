@@ -3,7 +3,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function Layout({children}) {
   const { data: session } = useSession();
-  console.log("Session", session);
+  // console.log("Session", session);
   
   if(!session) {
     return (
