@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-input, textarea{
+input, textarea, select{
   @apply border flex flex-col border-gray-300 w-full rounded-sm px-1;
   @apply mb-2;
 }
 
-input:focus, textarea:focus{
+input:focus, textarea:focus, select:focus{
   @apply border border-blue-900;
 }
 

@@ -48,8 +48,11 @@ export default async function handle(req, res) {
         }
       // res.status(200).json({ message: 'PUT request handled' });
     } else if (method === 'DELETE') {
-      const { name } = req.body;
-
+      // const { name } = req.body;
+      const { name } = req.query;
+      console.log("req.parmas: ",req.query);
+      console.log("Delete");
+      console.log(name);
         try {
           // Find the category by name and delete it
           const deletedCategory = await Category.findOneAndDelete({ name: name });

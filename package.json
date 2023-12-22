@@ -24,8 +24,10 @@
     "react": "^18",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18",
+    "react-slick": "^0.29.0",
     "react-sortablejs": "^6.1.4",
     "react-spinners": "^0.13.8",
+    "react-sweetalert2": "^0.6.0",
     "sortablejs": "^1.15.1"
   },
   "devDependencies": {
