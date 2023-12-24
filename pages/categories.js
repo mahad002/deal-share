@@ -151,10 +151,10 @@ function Categories({swal}) {
         setNewSpecType('');
       
         console.log("New Specs: ", newSpecs);
-      };
+    };
          
 
-      const handleRemoveSpec = (spec) => {
+    const handleRemoveSpec = (spec) => {
         // Perform any validation if needed
       
         // Filter out the removed specification from the list of specifications
@@ -164,7 +164,7 @@ function Categories({swal}) {
         setNewSpecs(updatedSpecs);
       
         console.log("Updated Specs: ", updatedSpecs);
-      };
+    };
       
 
     const handleSaveCategory = async (ev) => {
@@ -431,10 +431,14 @@ function Categories({swal}) {
                 </div>
 
                 {/* Delete Category */}
-                {selectedCategory && <div className="mt-4">
+                <div className="mt-4">
                     <button className="rounded-lg bg-blue-900 text-white py-1 px-2" onClick={ () => handleDeleteCategory(selectedCategory)}>Delete Category</button>
                     
-                </div>}
+                </div>
+                {/* {selectedCategory && <div className="mt-4">
+                    <button className="rounded-lg bg-blue-900 text-white py-1 px-2" onClick={ () => handleDeleteCategory(selectedCategory)}>Delete Category</button>
+                    
+                </div>} */}
 
                 {/* Edit Category */}
                 <div className="mt-4">

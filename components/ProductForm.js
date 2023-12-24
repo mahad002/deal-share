@@ -58,6 +58,7 @@ const ProductForm = ({
   price: existingPrice,
   category: existingCategory,
   specs: existingSpecs,
+  properties: existingProperties,
 }) => {
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
@@ -65,6 +66,9 @@ const ProductForm = ({
   const [category, setCategory] = useState(existingCategory || "");
   const [specs, setSpecs] = useState(existingSpecs || {});
   const [images, setImages] = useState(existingImages || []);
+  const [properties, setProperties] = useState( existingProperties || []);
+  const [newPropName, setNewPropName] = useState("");
+  const [newPropData, setNewPropData] = useState("");
   const [spinner, setSpinner] = useState(false);
   const [goToProducts, setGoToProducts] = useState(false);
   const [categorySpecsMapping, setCategorySpecsMapping] = useState([]);
@@ -106,6 +110,51 @@ const ProductForm = ({
     };
   }, []); // Empty dependency array for initial render only
 
+  const handleAddProperties = () => {
+    // Perform any validation if needed
+    // Check if the new specification already exists in newSpecs
+    const isPropExists = Array.isArray(properties) && properties.some(prop => prop.name === newPropName); // && spec.type === newSpecType
+  
+    if (isPropExists) {
+      alert('Property already exists!');
+      return;
+    }
+  
+    // Check if the name and type are not empty
+    if (!newPropName.trim() || !newPropData.trim()) {
+      alert('Name and data are mandatory!');
+      return;
+    }
+  
+    // Create a new specification object
+    const newProp = {
+      name: newPropName,
+      data: newPropData,
+    };
+    // handlePropertiesData();
+    
+    console.log("newProp: ",newProp);
+    
+    if (Array.isArray(properties)) {
+      // Add the new specification to the list of specifications
+      setProperties([...properties, newProp]);
+    } else {
+      // Add the new specification to the list of specifications
+      setProperties([newProp]);
+    }
+  
+    // Clear the input fields
+    setNewPropName('');
+    setNewPropData('');
+  
+    console.log("Properties: ", properties);
+  };
+
+  const handleRemoveProperties = (prop) => {
+    //remove a property when clicked
+    console.log("Remove Properties: ", prop);
+  }
+
   const saveProduct = async (ev) => {
     ev.preventDefault();
     const product = {
@@ -115,6 +164,7 @@ const ProductForm = ({
       category,
       specs,
       images,
+      properties,
     };
 
     try {
@@ -286,6 +336,72 @@ const ProductForm = ({
           />
         </div>
       ))}
+
+      <label className="block text-sm font-semibold text-gray-600 mt-4 mb-1">Properties</label>
+      <div className="mb-2 flex flex-wrap gap-2">
+        {/* <ReactSortable className="flex flex-wrap gap-1" list={properties} setList={setProperties}>
+          {!!properties?.length &&
+            properties.map((prop, index) => (
+              <div className="" key={prop.name}>
+                <div className="relative group h-24">
+                  <button
+                    className="absolute top-1 right-1 text-white rounded-full w-5 h-5 opacity-0 group-hover:opacity-100"
+                    onClick={() => removeImage(index)}
+                  >
+                    x
+                  </button>
+                  <div className="flex flex-col">
+                    <div className="font-semibold">{prop.name}</div>
+                    <div className="text-sm">{prop.data}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </ReactSortable> */}
+        <div className="mt-4 p-6 bg-blue-100 max-w-md mx-auto rounded-lg mb-8 mt-6">
+          <input
+            className="border rounded p-2 flex-grow"
+            type="text"
+            value={newPropName}
+            placeholder="Property name"
+            onChange={(ev) => setNewPropName(ev.target.value)}
+          />
+          <input
+            className="border rounded p-2 flex-grow"
+            type="text"
+            value={newPropData}
+            placeholder="Property data"
+            onChange={(ev) => setNewPropData(ev.target.value)}
+          />
+          {Array.isArray(properties) && properties.length > 0 && (
+            <div className="bg-blue-200 p-2 flex flex-wrap gap-2 mt-4">
+              {properties.map((prop, index) => (
+                <div key={index}>
+                  <button className="btn-primary" onClick={() => handleRemoveProperties(prop)}>
+                    {prop.name}
+                    <div className="border rounded p-2 flex-grow">{prop.data}</div>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+          <button
+            className="rounded-full bg-blue-900 text-white p-2 w-8 h-8 flex items-center justify-center"
+            onClick={handleAddProperties}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+          </button>
+        </div>
+      </div>
 
       <button
         type="submit"

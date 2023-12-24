@@ -20,7 +20,7 @@ export default function Products() {
           <Link href={'/products/newproduct'} className="rounded-lg bg-blue-900 text-white py-1 px-2 inline-block mt-2">
             Add new product
           </Link>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4 " //min-w-[200px]
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-4 max-w-[1200px] min-w-[1200px]" //min-w-[200px]
           >
             {products &&
               products.map((product, index) => (

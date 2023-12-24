@@ -8,7 +8,9 @@ const ProductSchema = new Schema({
   description: { type: String, required: true },
   images: [{ type: String }],
   category: { type: String, required: true },
-  specs: { type: Schema.Types.Mixed }, // Use Mixed type for dynamic key-value pairs
+  specs: { type: Schema.Types.Mixed }, 
+  properties: { type: Schema.Types.Mixed }, 
+  user: {type: String}, //user email will be stored here as it is unique
 }, {
   timestamps: true,
 });
