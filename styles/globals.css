@@ -43,6 +43,118 @@ img{
   max-height: 100%;
 }
 
+.limit-text {
+  max-width: 120px; /* Set your desired max-width */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 auto; /* Center the element horizontally */
+  text-align: center; /* Center the text within the element */
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product-item {
+  width: 250px; /* Fixed width for all product items */
+  margin: 1rem; /* Adjust margin as needed */
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.link-button{
+  @apply text-white bg-blue-900 text-sm py-1 px-2 rounded-md inline-flex gap-1 mr-1;
+}
+
+.product-item:hover, .link-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+  width: 100%;
+  height: 150px; /* Adjust height as needed */
+  object-fit: cover;
+  border-bottom: 1px solid #e2e8f0; /* Border color */
+}
+
+.product-content {
+  padding: 1rem;
+  text-align: center;
+}
+.product-image {
+  width: 100%;
+  height: 200px; /* Set your desired height */
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.product-content {
+  text-align: center;
+}
+
+/* Message box starts here */
+.container {
+  clear: both;
+  position: relative;
+}
+
+.container .arrow {
+  width: 12px;
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+  float: left;
+  top: 6px;
+  right: -1px;
+}
+
+.container .arrow .outer {
+  width: 0;
+  height: 0;
+  border-right: 20px solid #000000;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.container .arrow .inner {
+  width: 0;
+  height: 0;
+  border-right: 20px solid #ffffff;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  position: absolute;
+  top: 0;
+  left: 2px;
+}
+
+.container .message-body {
+  float: left;
+  width: 300px;
+  height: auto;
+  border: 1px solid #CCC;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  padding: 6px 8px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.container .message-body p {
+  margin: 0;
+}
 
 
 /* :root {

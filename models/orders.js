@@ -8,10 +8,11 @@ const OrderSchema = new Schema({
     terms: [{ type: String }],
     product: { type: Schema.Types.ObjectId, ref: 'Product' },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
+    request: { type: Schema.Types.ObjectId, ref: 'Request' },
     price: { type: Number, required: true },
     quantity: { type: Number, required: true },
     total: { type: Number, required: true },
-    status: { type: String, required: true },
+    status: { type: String, required: true }, //approved or not
     paymentMethod: { type: String, required: true },
     paymentResult: { type: Object },
     paidAt: { type: Date },

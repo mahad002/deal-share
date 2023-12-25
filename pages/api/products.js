@@ -1,11 +1,15 @@
 import { Product } from "@/models/product";
 import { mongooseConnect } from "../lib/mongoose";
+import { authConf } from "./auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 export default async function handle(req, res) {
     const { method } = req;
     
     try {
         await mongooseConnect();
+        const session = await getServerSession(req,res,authConf);   
+        console.log("Sesssion: ", session);
 
         if (method === 'POST') {
             const { title, description, price, category, specs, images, properties } = req.body;

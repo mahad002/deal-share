@@ -1,0 +1,118 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { getServerSession } from 'next-auth';
+import Layout from '@/components/Layout';
+import { ReactSortable } from 'react-sortablejs';
+import Spinner from '@/components/Spinner';
+
+export default function Store () {
+    const [user, setUser] = useState({});
+    const [store, setStore] = useState("");
+    const [bannerImage, setBannerImage] = useState("");
+    const [storeImage, setStoreImage] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [orders, setOrders] = useState([]);
+    // const [reviews, setReviews] = useState([]);
+    const [loading, setLoading] = useState(true); 
+    const [isStore, setIsStore] = useState(false);
+    const [isCreateStore, setIsCreateStore] = useState(false);
+    const [images, setImages] = useState([]);
+    const [description, setDescription] = useState("");
+    const [spinner, setSpinner] = useState(false);
+    // async function fetchData() {
+    //     try {
+    //         const { data } = await axios.get(`/api/user`);
+    //         setUser(data);
+    //         setStore(data.store);
+    //         setBannerImage(data.bannerImage);
+    //         setStoreImage(data.storeImage);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     fetchData();
+    // },[user])
+
+    const handleCreateStore = () => {
+        setIsCreateStore(true);
+    }
+    
+    const createStore = async() => {
+        try {
+            const data = {
+                store,
+                bannerImage,
+                storeImage,
+                isAdmin,
+            }
+            const response = await axios.post(`/api/user`, data);
+            setUser("response.data: ",response.data);
+        } catch (error) {
+            console.error("Error creating store:", error);
+        }
+    }
+
+    function StoreForm() {
+
+        const orderImages = (newImages) => {
+            setImages(newImages);
+        };
+
+        const removeImage = (index) => {
+            const updatedImages = [...images];
+            updatedImages.splice(index, 1);
+            setImages(updatedImages);
+        };
+
+        const uploadImage = (event) => {
+            setSpinner(true);
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                setImages([...images, reader.result]);
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+            setSpinner(false);
+        };
+
+        return (
+            <div>
+
+                {/* Description input */}
+                <label className="block text-sm font-semibold text-gray-600 mt-4 mb-1">Description</label>
+                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} className="border border-gray-300 rounded-lg p-2" />
+
+                {/* Banner image input */}
+                
+                {/* Store image input */}
+                </div>
+        );
+    }
+
+    return (
+        <Layout>
+            <h1 className='heading font-bold text-4xl'>Store</h1>
+            {!isStore && <>
+                    <div className=' flex flex-wrap flex-col justify-center items-end'>
+                        <div className='bg-gray-200 p-8 mt-5 w-full flex flex-wrap justify-center items-center'>
+                            <h1 className='font-bold text-6xl m-10'>You don&apos;t have a store yet!</h1>
+                        </div>
+                        <button className="btn-primary w-48 h-12 text-2xl mt-4 mr-0" onClick={handleCreateStore}>Create Store</button>
+                    </div>
+                </>
+            }
+            {isCreateStore && StoreForm()
+            }
+            <div>{user?.name}</div>
+        </Layout>
+    );
+   
+};
