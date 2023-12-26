@@ -20,15 +20,25 @@ label{
 }
 
 .btn-primary{
-  @apply bg-blue-900 rounded-md px-4 py-1 text-white;
+  @apply bg-primary rounded-sm px-4 py-1 text-white;
 }
+
+.btn-primary1{
+  @apply rounded-md bg-blue-800 text-white py-1 px-4 inline-block mt-2 mb-2;
+}
+
+.btn-primary1:hover{
+  transform: scale(1.01);
+}
+
+
 
 table.table-basic {
   @apply w-full mt-4;
 }
 
 table.table-basic thead tr td {
-  @apply bg-blue-100;
+  @apply text-sm text-gray-400;
 }
 
 table.table-basic tr td {
@@ -68,8 +78,14 @@ img{
   cursor: pointer;
 }
 
-.link-button{
-  @apply text-white bg-blue-900 text-sm py-1 px-2 rounded-md inline-flex gap-1 mr-1;
+.link-button {
+  @apply bg-gray-100 rounded-sm border-gray-600 text-gray-800 border-primary text-sm py-1 px-2 inline-flex gap-1 mr-1;
+  outline: 1px solid rgb(95, 92, 92); 
+}
+
+.link-button-red{
+  @apply  bg-red-100 rounded-sm text-red-900 shadow-sm border-primary text-sm py-1 px-2 inline-flex gap-1 mr-1;
+  outline: 1px solid rgb(227, 52, 52);
 }
 
 .product-item:hover, .link-button:hover {

@@ -429,13 +429,13 @@ function Categories({swal}) {
 
             <div className='flex flex wrap gap-4 justify-end items-end m-4'>
                 <div className="mt-4">
-                    <button className="rounded-lg bg-blue-900 text-white py-1 px-2" onClick={handleAddCategory}>Add Category</button>
+                    <button className="btn-primary1" onClick={handleAddCategory}>Add Category</button>
                     
                 </div>
 
                 {/* Delete Category */}
                 <div className="mt-4">
-                    <button className="rounded-lg bg-blue-900 text-white py-1 px-2" onClick={ () => handleDeleteCategory(selectedCategory)}>Delete Category</button>
+                    <button className="btn-primary1" onClick={ () => handleDeleteCategory(selectedCategory)}>Delete Category</button>
                     
                 </div>
                 {/* {selectedCategory && <div className="mt-4">
@@ -445,7 +445,7 @@ function Categories({swal}) {
 
                 {/* Edit Category */}
                 <div className="mt-4">
-                    <button className="rounded-lg bg-blue-900 text-white py-1 px-2" onClick={handleEditCategory}>Edit Category</button>
+                    <button className="btn-primary1" onClick={handleEditCategory}>Edit Category</button>
                 </div>
             </div>
 

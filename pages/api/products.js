@@ -12,7 +12,7 @@ export default async function handle(req, res) {
         console.log("Sesssion: ", session);
 
         if (method === 'POST') {
-            const { title, description, price, category, specs, images, properties } = req.body;
+            const { title, description, price, category, specs, images, properties, uid } = req.body;
             const productDoc = await Product.create({
                 title,
                 description,
@@ -20,7 +20,8 @@ export default async function handle(req, res) {
                 category,
                 specs,
                 images,
-                properties
+                properties,
+                user: uid,
             });
             res.json(productDoc);
         }
@@ -30,6 +31,12 @@ export default async function handle(req, res) {
               const product = await Product.findOne({ _id: req.query.id });
               if (!product) {
                   return res.status(404).json({ error: 'Product not found' });
+              }
+              res.json(product);
+          } else if (req.query?.uid) {
+              const product = await Product.findOne({ user: req.query.uid });
+              if (!product) {
+                  return res.json({ message: 'User has no Products!' });
               }
               res.json(product);
           } else {
@@ -52,10 +59,10 @@ export default async function handle(req, res) {
       }
 
         if (method === 'PUT') {
-            const { title, description, price, category, specs, _id, images, properties } = req.body;
+            const { title, description, price, category, specs, _id, images, properties, uid } = req.body;
             const updatedProduct = await Product.findByIdAndUpdate(
                 _id,
-                { title, description, price, category, specs, images, properties },
+                { title, description, price, category, specs, images, properties, user: uid },
                 { new: true }
             );
             if (!updatedProduct) {

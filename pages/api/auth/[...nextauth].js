@@ -6,7 +6,7 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from '../../lib/mongodb';
 // import EmailProvider from 'next-auth/providers/email'
 
-const adminEmails = ['mahad112002@gmail.com']
+const adminEmails = ['mahad112002@gmail.com'];
 
 export const authConf = {
   providers: [
@@ -31,7 +31,8 @@ export const authConf = {
         return session;
       }
       else{
-        return false;
+        return session;
+        // return false;
       }
     }
   }

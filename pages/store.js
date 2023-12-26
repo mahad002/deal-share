@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import Layout from '@/components/Layout';
 import Spinner from '@/components/Spinner';
 import { useSession } from 'next-auth/react';
+import SpeechBubble from '@/components/SpeechBubble';
 
 
 export default function Store() {
@@ -21,7 +22,9 @@ export default function Store() {
     const [images, setImages] = useState([]);
     const [spinner, setSpinner] = useState(false);
     const [spinner1, setSpinner1] = useState(false);
+    const [editStore, setEditStore] = useState(false);
     const [_id, setId] = useState({});
+    const [uid, setUid] = useState({});
 
     const {data: session} = useSession();
     // if(!session) return; 
@@ -37,13 +40,25 @@ export default function Store() {
             const res = await axios.get(`/api/user`);
             // console.log(res?.data);
             setId(res.data._id);
+            setUid(res.data._id);
+
             
             if(res?.data?.store === ""){
                 console.log("No store found");
                 setIsStore(false);
             }
             else{
-                setIsStore(true)
+                setIsStore(true);
+                const res1 =  await axios.get(`/api/products?uid=${_id}`);
+                console.log("res1.data", res1.data);
+                setBannerImage(res.data.bannerImage);
+                setStoreImage(res.data.storeImage);
+                setStore(res.data.store);
+                setDescription(res.data.description);
+                setIsAdmin(res.data.isAdmin);
+                console.log("Store is true!", isStore)
+                console.log(res.data)
+                // console.log("Store found");
             }
             
         }
@@ -73,6 +88,12 @@ export default function Store() {
             console.error("Error creating store:", error);
         }
     }
+
+    const storeImageContainerStyle = {
+        position: 'absolute',
+        bottom: '10px',  // Adjust the distance from the bottom
+        left: '10px',    // Adjust the distance from the left
+    };
 
     function StoreForm() {
 
@@ -288,26 +309,50 @@ export default function Store() {
     }
 
     function StoreDisplay() {
+        console.log("In Store");
+        console.log("Description", description)
+        return (
+            <>
+                <div style={{ position: 'relative' }}>
+                    <img src={bannerImage} alt="Banner Image" className='w-full md:h-36 lg:h-48 h-32 object-cover' style={{ borderRadius: '0 30px 30px 30px' }} />
+                    <div>
+                        <h2 className='flex flex-wrap heading font-bold sm:text-sm md:text-md lg:text-lg text-sm mt-4 ml-4 justify-center items-center text-blue-600'>{description}</h2>
+                    </div>
+                    <div style={storeImageContainerStyle}>
+                        <img src={storeImage} alt="Store Image" className='lg:w-32 md:w-24 w-20 lg:h-132 md:h-99 h-66 object-cover rounded-full' /> 
+                    </div>
+                    
+                </div>
+                <div className=''>
+                    <h1 className='heading font-bold sm:text-xl md:text-2xl lg:text-6xl text-3xl mt-4 ml-4'>{store}</h1>
+                </div>
 
-        return(
-            <></>
-        )
+                <div className='bg-gray-100 lg:mt-10 md:mt-7 mt-5'>
+                    <h1 className='heading font-bold sm:text-lg md:text-xl lg:text-2xl text-lg mt-4 ml-4'>Products</h1>
+                </div>
+                <div>
+                    
+                </div>
+            </>
+        );
     }
 
     return (
         <Layout>
-            <h1 className='heading font-bold text-4xl'>Store</h1>
+            {isStore && StoreDisplay()}
             {!isStore && 
-                <div className='flex flex-wrap flex-col justify-center items-end'>
+                <div className='flex flex-wrap flex-col justify-center '>
+                     <h1 className='heading font-bold text-4xl'>Store</h1>
                         {!isCreateStore && 
-                            <div className='bg-gray-200 p-8 mt-5 w-full h-full flex flex-wrap justify-center items-center' style={{ borderRadius: '0 30px 30px 30px' }}>
-                                <h1 className='font-bold text-6xl m-10'>You don&apos;t have a store yet!</h1>
-                                <button className="btn-primary  mt-4 mr-0" onClick={handleCreateStore}>Create Store</button> 
+                            <div className='bg-gray-200 lg:p-8 p-4 mt-5 w-full lg:h-full h-50 flex flex-wrap justify-center items-center' style={{ borderRadius: '0 30px 30px 30px' }}>
+                                <h1 className='font-bold lg:text-6xl md:text-3xl text-2xl lg:m-10 md:m-6 sm:m-4 m-2'>You don&apos;t have a store yet!</h1>
+                                <button className="btn-primary  lg:mt-4 md:mt-2 mt-2 mr-0" onClick={handleCreateStore}>Create Store</button> 
                             </div>
                         }
                     </div>
             }
             {isCreateStore && StoreForm()}
+            {/* {!isCreateStore && StoreForm()} */}
             <div>{user?.name}</div>
         </Layout>
     );
