@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
+import { useSession } from "next-auth/react";
 
 // const categorySpecsMapping = {
 //   "Mobile Phone": ["brand", "model", "screenSize", "ram", "rom"],
@@ -59,6 +60,7 @@ const ProductForm = ({
   category: existingCategory,
   specs: existingSpecs,
   properties: existingProperties,
+  uid: existingUid,
 }) => {
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
@@ -72,9 +74,13 @@ const ProductForm = ({
   const [spinner, setSpinner] = useState(false);
   const [goToProducts, setGoToProducts] = useState(false);
   const [categorySpecsMapping, setCategorySpecsMapping] = useState([]);
+  const [uid, setUid] = useState("" || existingUid);
   const router = useRouter();
 
+  const {data: session} = useSession();
+
   useEffect(() => {
+    setUid(session?.user?.email);
     const fetchCategories = async () => {
       try {
         const response = await axios.get(`/api/categories`);
@@ -165,6 +171,7 @@ const ProductForm = ({
       specs,
       images,
       properties,
+      uid,
     };
 
     try {

@@ -34,7 +34,7 @@ export default async function handle(req, res) {
               }
               res.json(product);
           } else if (req.query?.uid) {
-              const product = await Product.findOne({ user: req.query.uid });
+              const product = await Product.find({ user: req.query.uid });
               if (!product) {
                   return res.json({ message: 'User has no Products!' });
               }

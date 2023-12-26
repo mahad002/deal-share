@@ -49,7 +49,7 @@ export default function Store() {
             }
             else{
                 setIsStore(true);
-                const res1 =  await axios.get(`/api/products?uid=${_id}`);
+                const res1 =  await axios.get(`/api/products?uid=${session?.user?.email}`);
                 console.log("res1.data", res1.data);
                 setBannerImage(res.data.bannerImage);
                 setStoreImage(res.data.storeImage);
