@@ -30,7 +30,7 @@ export default function Layout({children}) {
         </div>
       </div>
       <div className="bg-gray-bg min-h-screen flex">
-        <Navbar show={showNav}/>
+        <Navbar show={showNav} className='min-width-[200px]'/>
         <div className="bg-white flex-grow mt-2 mr-2 mb-2 rounded-lg p-4">
           {children}
         </div>

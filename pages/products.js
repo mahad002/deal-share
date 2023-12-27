@@ -25,7 +25,7 @@ export default function Products() {
               products.map((product, index) => (
                 <div
                   key={index}
-                  className="product-item max-w-[250px] border border-gray-300 rounded overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer"
+                  className="product-item max-w-[220px] border border-gray-300 rounded overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out cursor-pointer"
                 >
                   <div className="items-center mb-2 justify-center">
                     {product.images && product.images.length > 0 ? (

@@ -51,7 +51,7 @@ export default function Navbar({show}) {
 
     //-left-full
     return (
-        <aside className={"text-gray-500 p-4 pr-0 fixed bg-gray-bg h-full w-full top-0 md:static md:w-auto transition-all " + (show?'left-0':'-left-full')}> 
+        <aside className={"text-gray-500 p-4 pr-0 fixed bg-gray-bg h-full min-w-[220px] top-0 md:static md:w-auto transition-all " + (show?'left-0':'-left-full')}> 
             <div className='mb-4 mr-20'>
                 <Logo/>
             </div>
