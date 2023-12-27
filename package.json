@@ -55,6 +55,6 @@
         "child_process": false
     },
     "engines": {
-        "node": "21.5.0"
+        "node": "18.18.0"
     }
 }
