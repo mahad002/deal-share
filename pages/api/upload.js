@@ -13,9 +13,9 @@ export default async function handle(req, res){
                 resolve({fields, files});
             });
         });
-        console.log("Length: ",files.file);
-        console.log("Files: ",files.file);
-        console.log("Fields: ",fields);
+        // console.log("Length: ",files.file);
+        // console.log("Files: ",files.file);
+        // console.log("Fields: ",fields);
         const client = new S3Client({
             region: 'ap-south-1',
             credentials: {

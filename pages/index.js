@@ -22,7 +22,6 @@ export default function Home() {
       if(res.data === false){
         console.log("No store found");
         const data = {
-          store: "",
           description: "",
           bannerImage: "",
           storeImage: "",

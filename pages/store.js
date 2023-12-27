@@ -44,7 +44,7 @@ export default function Store() {
             setUid(res.data._id);
 
             
-            if(res?.data?.store === ""){
+            if(res?.data?.store === "" || !res?.data?.store){
                 console.log("No store found");
                 setIsStore(false);
             }
@@ -74,22 +74,22 @@ export default function Store() {
         setIsCreateStore(true);
     }
     
-    const createStore = async() => {
-        try {
-            const data = {
-                _id,
-                store,
-                description,
-                bannerImage,
-                storeImage,
-                isAdmin,
-            }
-            const response = await axios.post(`/api/user`, data);
-            setUser("response.data: ",response.data);
-        } catch (error) {
-            console.error("Error creating store:", error);
-        }
-    }
+    // const createStore = async() => {
+    //     try {
+    //         const data = {
+    //             _id,
+    //             store,
+    //             description,
+    //             bannerImage,
+    //             storeImage,
+    //             isAdmin,
+    //         }
+    //         const response = await axios.post(`/api/user`, data);
+    //         setUser("response.data: ",response.data);
+    //     } catch (error) {
+    //         console.error("Error creating store:", error);
+    //     }
+    // }
 
     const storeImageContainerStyle = {
         position: 'absolute',
@@ -164,6 +164,7 @@ export default function Store() {
                 if(response.data){
                     alert('Successfully edited profile!');    
                     setIsStore(true);
+                    setIsCreateStore(false);
                 }
             } catch (error) {
                 console.error('Error submitting form:', error);
@@ -332,8 +333,10 @@ export default function Store() {
                 <div className='bg-gray-100 lg:mt-10 md:mt-7 mt-5'>
                     <h1 className='heading font-bold sm:text-lg md:text-xl lg:text-2xl text-lg mt-4 ml-4'>Products</h1>
                 </div>
-                <div>
-                    
+                <div className='justify-end items-center w-full'>
+                    <Link href={`/store/newProduct`} className="btn-primary1">
+                        Add new product
+                    </Link>
                 </div>
                 <div className="product-container">
                     {products &&

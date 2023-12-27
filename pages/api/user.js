@@ -10,20 +10,19 @@ export default async function handle(req, res) {
     try {
         await mongooseConnect();
         const session = await getServerSession(req,res,authConf);
-        console.log("Sesssion: ", session);
+        // console.log("Sesssion: ", session);
         const user1 = session.user;
-        console.log("User: ", user1);
+        // console.log("User: ", user1);
         const {name, email, image } = user1;
 
         if (method === 'POST') {
-            console.log("I'm here")
-            console.log("post", req.body);
+            // console.log("I'm here")
+            // console.log("post", req.body);
             const { store, description, bannerImage, storeImage, isAdmin } = req.body;
             const userDoc = await Store.create({
                 name,
                 email,
                 image,
-                store,
                 description,
                 bannerImage,
                 storeImage,
@@ -33,11 +32,11 @@ export default async function handle(req, res) {
         }
 
         if (method === 'GET') {
-            console.log("Im here");
-            console.log(email);
+            // console.log("Im here");
+            // console.log(email);
             const user = await Store.findOne({ email: email });
 
-            console.log("user: ", user);
+            // console.log("user: ", user);
 
             if (!user) {
                 return res.json(false);
@@ -46,9 +45,9 @@ export default async function handle(req, res) {
         }
 
         if (method === 'PUT') {
-            console.log("hehe")
+            // console.log("hehe")
             const {store, description, bannerImage, storeImage, isAdmin, _id } = req.body;
-            console.log("hehe", _id)
+            // console.log("hehe", _id)
             const updatedUser = await Store.findByIdAndUpdate(
                 _id,
                 { name, email, image, store, description, bannerImage, storeImage, isAdmin },
@@ -56,7 +55,7 @@ export default async function handle(req, res) {
             );
             console.log("hehe")
             if (!updatedUser) {
-                console.log("Updated User: ", updatedUser)
+                // console.log("Updated User: ", updatedUser)
                 return res.status(404).json({ error: 'User not found' });
             }
             console.log("hehe")

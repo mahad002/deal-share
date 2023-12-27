@@ -9,7 +9,7 @@ export default async function handle(req, res) {
     try {
         await mongooseConnect();
         const session = await getServerSession(req,res,authConf);   
-        console.log("Sesssion: ", session);
+        // console.log("Sesssion: ", session);
 
         if (method === 'POST') {
             const { title, description, price, category, specs, images, properties, uid } = req.body;
@@ -48,7 +48,7 @@ export default async function handle(req, res) {
                   console.log(category);
                   // If a category is provided, filter products by category
                   products = await Product.find({ category });
-                  console.log("PRODUCTS: ",products)
+                //   console.log("PRODUCTS: ",products)
               } else {
                   // If no category is provided, return all products
                   products = await Product.find({});

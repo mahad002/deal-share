@@ -16,19 +16,19 @@ export default async function handle(req, res) {
       res.json(categories);
     } else if (method === 'POST') {
         const { name, specifications } = req.body;
-        console.log('Specification:', specifications);
+        // console.log('Specification:', specifications);
           const categoryDoc = await Category.create({
             name,
             specifications,
           });
-          console.log('Created category:', categoryDoc);
+          // console.log('Created category:', categoryDoc);
           res.json(categoryDoc);   
          // res.status(200).json({ message: 'POST request handled' });
       }
      else if (method === 'PUT') {
         const { name, specifications, _id} = req.body;
-        console.log(req.body);
-        console.log("SPECS: ",specifications);
+        // console.log(req.body);
+        // console.log("SPECS: ",specifications);
         try {
           // Find the category by name and update it
           const updatedCategory = await Category.findOneAndUpdate(
@@ -50,9 +50,9 @@ export default async function handle(req, res) {
     } else if (method === 'DELETE') {
       // const { name } = req.body;
       const { name } = req.query;
-      console.log("req.parmas: ",req.query);
-      console.log("Delete");
-      console.log(name);
+      // console.log("req.parmas: ",req.query);
+      // console.log("Delete");
+      // console.log(name);
         try {
           // Find the category by name and delete it
           const deletedCategory = await Category.findOneAndDelete({ name: name });

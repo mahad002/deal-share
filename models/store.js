@@ -6,7 +6,7 @@ const StoreSchema = new Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     image: {type: String},
-    store: {type: String, unique: true},
+    store: {type: String},
     bannerImage: {type: String},
     storeImage: {type: String},
     isAdmin: {type: Boolean, default: false},

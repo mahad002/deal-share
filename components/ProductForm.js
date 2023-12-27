@@ -61,6 +61,7 @@ const ProductForm = ({
   specs: existingSpecs,
   properties: existingProperties,
   uid: existingUid,
+  back: existingBack
 }) => {
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
@@ -73,6 +74,7 @@ const ProductForm = ({
   const [newPropData, setNewPropData] = useState("");
   const [spinner, setSpinner] = useState(false);
   const [goToProducts, setGoToProducts] = useState(false);
+  const [goToStore, setGoToStore] = useState(false);
   const [categorySpecsMapping, setCategorySpecsMapping] = useState([]);
   const [uid, setUid] = useState("" || existingUid);
   const router = useRouter();
@@ -180,6 +182,7 @@ const ProductForm = ({
       } else {
         await axios.post('/api/products', product);
       }
+      if(existingBack){setGoToStore(true);}
       setGoToProducts(true);
     } catch (error) {
       console.error("Error saving product:", error);
@@ -240,8 +243,10 @@ const ProductForm = ({
       return newImages;
     });
   };
-
-  if (goToProducts) {
+  // console.log("existingBack: ", goToStore);
+  if(goToStore){
+    router.push('/store');
+  } else if (goToProducts) {
     router.push('/products');
   }
 
