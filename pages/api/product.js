@@ -1,4 +1,4 @@
-import { Product } from "@/models/product";
+import { Product } from "../../models/product";
 import { mongooseConnect } from "../lib/mongoose";
 import { authConf } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";

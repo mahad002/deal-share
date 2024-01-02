@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Store, User } from '../../models/store';
-import { Product } from "@/models/product";
+import { Product } from "../../models/product";
 import { mongooseConnect } from "../lib/mongoose";
 import { getServerSession } from 'next-auth';
 import { authConf } from './auth/[...nextauth]';

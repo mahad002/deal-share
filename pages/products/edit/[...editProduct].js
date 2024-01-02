@@ -1,5 +1,5 @@
-import Layout from "@/components/Layout";
-import ProductForm from "@/components/ProductForm";
+import Layout from "../../../components/Layout";
+import ProductForm from "../../../components/ProductForm";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
@@ -18,7 +18,7 @@ export default function EditProductPage() {
             // console.log(editProduct);
             return;
         }
-        axios.get(`/api/products?id=${editProduct}`).then(response => {
+        axios.get(`/api/product?id=${editProduct}`).then(response => {
             console.log('Response Data: ',response.data);
             setProductInfo(response.data);
             console.log("Product: ",productInfo);

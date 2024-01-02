@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getServerSession } from 'next-auth';
-import Layout from '@/components/Layout';
-import Spinner from '@/components/Spinner';
+import Layout from '../components/Layout';
+import Spinner from '../components/Spinner';
 import { useSession } from 'next-auth/react';
-import SpeechBubble from '@/components/SpeechBubble';
 import Link from 'next/link';
 
 
@@ -50,7 +49,7 @@ export default function Store() {
             }
             else{
                 setIsStore(true);
-                const res1 =  await axios.get(`/api/products?uid=${session?.user?.email}`);
+                const res1 =  await axios.get(`/api/product?uid=${session?.user?.email}`);
                 setProducts(res1.data);
                 console.log("res1.data", res1.data);
                 setBannerImage(res.data.bannerImage);

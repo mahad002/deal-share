@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "./Layout";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -178,12 +178,12 @@ const ProductForm = ({
 
     try {
       if (_id) {
-        await axios.put('/api/products', { ...product, _id });
+        await axios.put('/api/product', { ...product, _id });
       } else {
-        await axios.post('/api/products', product);
+        await axios.post('/api/product', product);
       }
       if(existingBack){setGoToStore(true);}
-      setGoToProducts(true);
+      else {setGoToProducts(true);}
     } catch (error) {
       console.error("Error saving product:", error);
       // Handle error, e.g., show a user-friendly message

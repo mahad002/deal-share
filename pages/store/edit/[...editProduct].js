@@ -1,5 +1,5 @@
-import Layout from "@/components/Layout";
-import ProductForm from "@/components/ProductForm";
+import Layout from "../../../components/Layout";
+import ProductForm from "../../../components/ProductForm";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export default function EditProductPage() {
     const router = useRouter();
     const {editProduct} = router.query;
+    console.log(router);
     // const pId = useParams();
     const [productInfo, setProductInfo] = useState();
     const back = {back: 'store'}
@@ -19,9 +20,13 @@ export default function EditProductPage() {
             // console.log(editProduct);
             return;
         }
-        axios.get(`/api/products?id=${editProduct}`).then(response => {
+        axios.get(`/api/product?id=${editProduct}`).then(response => {
             console.log('Response Data: ',response.data);
-            setProductInfo(response.data,...back);
+            const data = {
+                ...response.data,
+                ...back,
+            }
+            setProductInfo(data);
             console.log("Product: ",productInfo);
         });
     },[editProduct]);

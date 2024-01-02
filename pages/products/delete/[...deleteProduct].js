@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "../../../components/Layout";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ export default function DeleteProductPage() {
         if(!deleteProduct){
             return;
         }
-        axios.get(`/api/products?id=${deleteProduct}`).then(response => {
+        axios.get(`/api/product?id=${deleteProduct}`).then(response => {
             console.log('Response Data: ',response.data);
             setProductInfo(response.data);
             console.log("Product: ",productInfo);});
@@ -24,7 +24,7 @@ export default function DeleteProductPage() {
     }
 
     function deleteProduct1() {
-        axios.delete(`/api/products?id=${deleteProduct}`).then(response => {
+        axios.delete(`/api/product?id=${deleteProduct}`).then(response => {
             console.log('Response Data: ',response.data);
             setProductInfo(response.data);
             console.log("Product: ",productInfo);});

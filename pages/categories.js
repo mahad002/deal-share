@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Layout from '@/components/Layout';
+import Layout from '../components/Layout';
 import Link from 'next/link';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '../components/ProductCard';
 import { withSwal} from 'react-sweetalert2';
 
 function Categories({swal}) {
@@ -85,7 +85,7 @@ function Categories({swal}) {
         return () => {
             // Any cleanup code goes here
         };
-    }, []); // Empty dependency array for initial render only
+    }, [categorySpecsMapping    ]); // Empty dependency array for initial render only
 
     // Fetch products when the selected category changes
     useEffect(() => {

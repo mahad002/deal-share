@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "../components/Layout";
 import { useSession } from "next-auth/react";
 import Image from 'next/image';
 import {motion} from 'framer-motion';
