@@ -1,7 +1,7 @@
 // pages/api/orders.js
 
-import { mongooseConnect } from '../../lib/mongoose';
-import Order from '../../models/order';
+import { mongooseConnect } from '../lib/mongoose';
+import Order from '../../models/orders';
 
 // Connect to MongoDB
 await mongooseConnect();
