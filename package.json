@@ -33,7 +33,9 @@
     "fs.promises": "^0.1.2",
     "net": "^1.0.0",
     "tls": "^0.0.1",
-    "dns": "^0.2.2"
+    "dns": "^0.2.2",
+    "fs": "^0.0.1-security",
+    "dgram": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
